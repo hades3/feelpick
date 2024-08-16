@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>요리 인증 수정</title>
+</head>
+<body>
+<h1>요리 인증 글 수정</h1>
+
+<form th:action="${postAddress}" method="post" enctype="multipart/form-data" th:object="${modifyDto}">
+    <div th:each="imageFile : *{imageFiles}">
+        <img th:src="|/post/images/${imageFile.storeFileName}|" style="width:100px; height:auto;">
+    </div>
+
+    <div>
+        <label th:for="*{comment}">한마디:</label>
+        <textarea th:field="*{comment}" rows="4" cols="50" th:placeholder="*{comment}"></textarea>
+    </div>
+    <div>
+        <button type="submit">수정</button>
+    </div>
+</form>
+</body>
+</html>

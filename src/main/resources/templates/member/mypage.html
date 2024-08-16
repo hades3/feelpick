@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Account Settings</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<h2>Account Settings</h2>
+
+<span th:text="|${member.username}님 환영합니다.|"></span>
+
+<!-- 비밀번호 변경 폼 -->
+<div class="password-change-container">
+  <h3>Change Password</h3>
+  <form th:action="@{/member/mypage/change}" method="post" th:object="${passwordDto}">
+    <div>
+      <label th:for="*{currentPassword}">Current Password:</label>
+      <input type="password" th:field="*{currentPassword}" required />
+    </div>
+    <div>
+      <label th:for="*{newPassord}">New Password:</label>
+      <input type="password" th:field="*{newPassord}" required />
+    </div>
+    <div>
+      <label th:for="*{confirmPassord}">Confirm New Password:</label>
+      <input type="password" th:field="*{confirmPassord}" required />
+    </div>
+    <div>
+      <button type="submit">Change Password</button>
+    </div>
+  </form>
+</div>
+
+<!-- 회원 탈퇴 버튼 -->
+<div class="account-delete-container">
+  <h3>Delete Account</h3>
+  <form th:action="@{/member/mypage/delete}" method="post" onsubmit="return confirm('정말 삭제를 원하십니까? 되돌릴 수 없습니다.');">
+    <button type="submit" class="btn-delete">Delete Account</button>
+  </form>
+</div>
+
+<!-- 내가 쓴 글로 이동 -->
+<div class="my-posts-container">
+  <h3>My Posts</h3>
+  <a th:href="@{/member/mypage/posts}" class="btn">View My Posts</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>feelpick</title>
+    <style>
+        .menuItem {
+            padding: 10px;
+            margin: 5px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .highlight {
+            background-color: #4caf50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<h1>메뉴 랜덤 선택</h1>
+<div id="menuList" th:each="food: ${foods}">
+    <div class="menuItem"><a th:href="|/food/foodInfo/${food}|" th:text="${food}"></a></div>
+</div>
+<button onclick="highlightRandomMenu()">하이라이트 메뉴 선택</button>
+
+<script>
+    function highlightRandomMenu() {
+        const menuItems = document.querySelectorAll(".menuItem");
+        const currentIndex = Math.floor(Math.random() * menuItems.length);
+
+        // 모든 메뉴 아이템의 하이라이트를 초기화
+        menuItems.forEach((item) => {
+            item.classList.remove("highlight");
+        });
+
+        // 랜덤한 메뉴 아이템을 하이라이트
+        menuItems[currentIndex].classList.add("highlight");
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Food Details</title>
+</head>
+<body>
+<h1>Food Recipe Details</h1>
+
+<!-- 레시피 링크 및 유튜브 영상 -->
+<a th:href="${food.recipeUrl}" target="_blank">View Recipe</a>
+<a th:href="${food.videoUrl}">먹방 영상 보러가기</a>
+
+<h2>오늘의 요리 자랑</h2>
+<div th:each="post : ${food.posts}">
+  <div>
+    <div th:each="imageFile : ${post.imageFiles}">
+      <img th:src="|/post/images/${imageFile.storeFileName}|" style="width:100px; height:auto;">
+    </div>
+    <p th:text="${post.comment}"></p>
+
+    <!-- 수정 및 삭제 버튼 -->
+    <div th:if="${session.LOGIN_MEMBER != null && post.member.username == session.LOGIN_MEMBER.username}">
+      <form th:action="|/post/modify/${post.id}|" method="get">
+        <button type="submit" class="btn-delete">수정</button>
+      </form>
+
+      <form th:action="|/post/delete/${post.id}|" method="post" onsubmit="return confirm('정말 삭제를 원하십니까? 되돌릴 수 없습니다.');">
+        <button type="submit" class="btn-delete">삭제</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<a th:if="${session.LOGIN_MEMBER != null}" th:href="|/post/create/${food.id}|" class="button">인증글 작성</a>
+</body>
+</html>

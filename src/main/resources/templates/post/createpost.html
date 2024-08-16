@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>요리 인증 글 작성</title>
+</head>
+<body>
+<h1>요리 인증 글 작성</h1>
+
+<h2>내가 만든 요리 자랑하기</h2>
+<form th:action="|/post/create/${foodId}|" method="post" enctype="multipart/form-data" th:object="${postDto}">
+  <ul>
+    <li>이미지 <input type="file" th:field="*{imageFiles}" multiple="multiple" required></li>
+    <li>한마디 <input type="text" th:field="*{comment}" required></li>
+  </ul>
+  <button type="submit">등록</button>
+</form>
+</body>
+</html>

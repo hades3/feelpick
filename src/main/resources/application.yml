@@ -1,0 +1,31 @@
+Spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/feelpick;
+    username : sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+
+  ai:
+    vertex:
+      ai:
+        gemini:
+          project-id: feelpick
+          location: asia-northeast3
+
+
+# dir 경로 설정을 다음과 같이 추가하고 경로상 가장 마지막엔 반드시 '/'를 넣어줘야 한다.
+# 해당 로컬 경로는 반드시 미리 만들어 둬야 한다.
+file:
+  dir: C:/Users/hades/Desktop/feelpick/file/
+
+logging:
+  level:
+    org.hibernate.SQL: debug

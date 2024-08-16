@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <script th:src="@{/js/scripts.js}"></script>
+</head>
+<body>
+<h2>Admin Page</h2>
+
+<!-- 탭 메뉴 -->
+<div class="tab-container">
+    <button class="tab-btn" onclick="openTab(event, 'members')">members</button>
+    <button class="tab-btn" onclick="openTab(event, 'posts')">Posts</button>
+</div>
+
+<!-- 회원 목록 탭 -->
+<div id="members" class="tab-content">
+    <h3>member List</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>username</th>
+            <th>Password</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 여기에 회원 데이터 렌더링 -->
+        <tr th:each="member : ${members}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.username}"></td>
+            <td th:text="${member.password}"></td>
+            <td>
+                <form th:action="|/admin/member/delete/${member.id}|" method="post" onsubmit="return confirm('정말 탈퇴시겠습니까? 되돌릴 수 없습니다.');">
+                    <button type="submit">탈퇴</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 전체 게시글 목록 탭 -->
+<div id="posts" class="tab-content">
+    <h3>Post List</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Author</th>
+            <th>Image</th>
+            <th>Content</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 여기에 게시글 데이터 렌더링 -->
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.id}"></td>
+            <td th:text="${post.member.username}"></td>
+            <td><img th:src="@{/images/{image}(image=${post.imageUrl})}" alt="Post Image" style="width:100px;"/></td>
+            <td th:text="${post.content}"></td>
+            <td>
+                <form th:action="|/admin/post/delete/${post.id}|" method="post" onsubmit="return confirm('정말 삭제하시겠습니까? 되돌릴 수 없습니다.');">
+                    <button type="submit">삭제</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
