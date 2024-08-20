@@ -1,19 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>요리 인증 글 작성</title>
+  <title>Feel Pick!</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
-<body>
-<h1>요리 인증 글 작성</h1>
 
-<h2>내가 만든 요리 자랑하기</h2>
-<form th:action="|/post/create/${foodId}|" method="post" enctype="multipart/form-data" th:object="${postDto}">
-  <ul>
-    <li>이미지 <input type="file" th:field="*{imageFiles}" multiple="multiple" required></li>
-    <li>한마디 <input type="text" th:field="*{comment}" required></li>
-  </ul>
-  <button type="submit">등록</button>
+<body>
+
+<div class="navbar">
+  <div class="left">
+    <a href="/">Feel Pick!</a>
+  </div>
+</div>
+
+<h1>내가 만든 요리 자랑하기</h1>
+<h2>요리와 함께한 순간을 기록해보세요!</h2>
+
+<form th:action="|/post/create/${foodId}|" method="post" enctype="multipart/form-data" id="write-form" th:object="${postDto}">
+  <textarea name="comment" rows="10" cols="50" autofocus="autofocus"></textarea><br>
+  <input type="file" id="imageFiles" name="imageFiles" multiple="multiple" style="display: none" required><br>
+  <label class="image-label" for="imageFiles">사진 업로드</label>
+  <span id="image-span" class="image-span">선택된 사진이 없습니다.</span>
 </form>
+
+<form th:action="${returnAddress}" method="get" id="write-cancel">
+</form>
+
+<button type="submit" form="write-form" style="margin-right: 10px">작성</button>
+<button type="submit" form="write-cancel" style="margin-left: 10px">취소</button>
+
+<script>
+  const fileInput = document.getElementById('imageFiles');
+  const fileName = document.getElementById('image-span');
+
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files.length > 0) {
+      fileName.textContent = fileInput.files[0].name;
+    }
+    else{
+      fileName.textContent = "선택된 사진이 없습니다.";
+    }
+  });
+
+</script>
+
+
 </body>
 </html>

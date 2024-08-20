@@ -31,19 +31,38 @@ public class Post {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    private LocalDateTime modifiedTime;
+    private LocalDateTime createdDateTime;
+
+    private LocalDateTime modifiedDateTime;
 
     // 생성 메서드
     public static Post createPost(Member member, Food food, List<UploadFile> imageFiles, String comment){
         Post post = new Post();
         post.setMember(member);
-        post.setImageFiles(imageFiles);
+        for (UploadFile imageFile : imageFiles) {
+            post.getImageFiles().add(imageFile);
+            imageFile.setPost(post);
+        }
         post.setComment(comment);
         post.setFood(food);
-        post.setModifiedTime(LocalDateTime.now());
+        post.setCreatedDateTime(LocalDateTime.now());
+        post.setModifiedDateTime(post.getCreatedDateTime());
         for (UploadFile imageFile : imageFiles) {
             imageFile.setPost(post);
         }
         return post;
+    }
+
+    // 수정 메서드
+    public void modifyPost(List<UploadFile> imageFiles, String comment) {
+        if (!imageFiles.isEmpty()){
+            this.getImageFiles().removeAll(getImageFiles());
+            for (UploadFile imageFile : imageFiles) {
+                this.getImageFiles().add(imageFile);
+                imageFile.setPost(this);
+            }
+        }
+        this.setModifiedDateTime(LocalDateTime.now());
+        this.setComment(comment);
     }
 }

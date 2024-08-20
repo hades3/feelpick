@@ -1,36 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Food Details</title>
+  <title>Feel Pick!</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-<h1>Food Recipe Details</h1>
+
+<div class="navbar">
+  <div class="left">
+    <a href="/">Feel Pick!</a>
+  </div>
+</div>
+
+<h1 th:text="|오늘의 선택, ${food.name}!|"></h1>
 
 <!-- 레시피 링크 및 유튜브 영상 -->
-<a th:href="${food.recipeUrl}" target="_blank">View Recipe</a>
-<a th:href="${food.videoUrl}">먹방 영상 보러가기</a>
+<div class="foodinfo recipe">
+<h2>직접 요리해보고 싶어요🧑‍🍳</h2>
+<h3><a th:href="${food.recipeUrl}" target="_blank">만개의레시피</a>가 레시피를 알려줄거에요!</h3>
+</div>
 
-<h2>오늘의 요리 자랑</h2>
-<div th:each="post : ${food.posts}">
-  <div>
+<div class="foodinfo video">
+<h2>먹방 영상을 보고 싶어요📺</h2>
+<h3><a th:href="${food.videoUrl}" target="_blank">유튜브</a>에서 보고 싶은 먹방 영상을 선택할 수 있어요!</h3>
+</div>
+
+<div class="foodinfo show_off">
+<h2>오늘의 요리 자랑☺️</h2>
+<h3><a th:if="${session.LOGIN_MEMBER != null}" th:href="|/post/create/${food.id}|" class="button">나도 자랑할래요</a></h3>
+  <div class="post" th:each="post : ${food.posts}">
     <div th:each="imageFile : ${post.imageFiles}">
-      <img th:src="|/post/images/${imageFile.storeFileName}|" style="width:100px; height:auto;">
+      <img th:src="|/post/images/${imageFile.storeFileName}|" >
     </div>
-    <p th:text="${post.comment}"></p>
 
-    <!-- 수정 및 삭제 버튼 -->
-    <div th:if="${session.LOGIN_MEMBER != null && post.member.username == session.LOGIN_MEMBER.username}">
-      <form th:action="|/post/modify/${post.id}|" method="get">
-        <button type="submit" class="btn-delete">수정</button>
-      </form>
+    <div class="post-content">
+      <div class="post-writer" th:text="${post.member.username}"></div>
+      <div class="post-comment" th:text="${post.comment}"></div>
+      <div class="post-date" th:text="|${post.createdDateTime.toLocalDate()} ${post.createdDateTime.getHour()}:${post.createdDateTime.getMinute()}|"></div>
 
-      <form th:action="|/post/delete/${post.id}|" method="post" onsubmit="return confirm('정말 삭제를 원하십니까? 되돌릴 수 없습니다.');">
-        <button type="submit" class="btn-delete">삭제</button>
-      </form>
+      <!-- 수정 및 삭제 버튼 -->
+      <div class="post-modify" >
+        <form th:if="${session.LOGIN_MEMBER != null && post.member.username == session.LOGIN_MEMBER.username}" th:action="|/post/modify/${post.id}|" method="get">
+          <button type="submit">수정</button>
+        </form>
+      </div>
+
+      <div class="post-delete" th:if="${session.LOGIN_MEMBER != null && post.member.username == session.LOGIN_MEMBER.username}">
+        <form th:action="|/post/delete/${post.id}|" method="post" onsubmit="return confirm('정말 삭제를 원하십니까? 되돌릴 수 없습니다.');">
+          <button type="submit">삭제</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 
-<a th:if="${session.LOGIN_MEMBER != null}" th:href="|/post/create/${food.id}|" class="button">인증글 작성</a>
+</div>
+
 </body>
 </html>

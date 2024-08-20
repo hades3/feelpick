@@ -2,6 +2,7 @@ package yctw.feelpick.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 import yctw.feelpick.domain.UploadFile;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public class ModifyDto {
 
     private String comment;
 
-    private List<UploadFile> imageFiles;
+    private List<UploadFile> oldImageFiles;
+
+    private List<MultipartFile> newImageFiles;
 
 }

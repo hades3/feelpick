@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Feel Pick!</title>
+    <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="left">
+        <a href="/">Feel Pick!</a>
+    </div>
+</div>
+
+<h1>관리자 페이지</h1>
+
+<!-- Tabs -->
+<div id="tabMenu">
+    <span class="tabs" onclick="showTab('manageMemberTab')">회원 관리</span>
+    <span class="tabs" onclick="showTab('managePostTab')">게시글 관리</span>
+</div>
+
+<!-- Tab Content -->
+<div id="tabContents">
+    <div id="manageMemberTab" class="tab-content manage-member">
+        <h2>회원 관리</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>회원 ID</th>
+                <th>사용자 이름</th>
+                <th>비밀번호</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 여기에 회원 데이터 렌더링 -->
+            <tr th:each="member : ${members}" th:if="${member.username} != admin">
+                <td th:text="${member.id}"></td>
+                <td th:text="${member.username}"></td>
+                <td th:text="${member.password}"></td>
+                <td>
+                    <form th:action="|/admin/banish/${member.id}|" method="post" onsubmit="return confirm('정말 탈퇴시겠습니까? 되돌릴 수 없습니다.');">
+                        <button type="submit">탈퇴</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="managePostTab" class="tab-content manage-post">
+        <h2>게시글 관리</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>게시글 ID</th>
+                <th>작성자</th>
+                <th>사진</th>
+                <th>작성글</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 여기에 게시글 데이터 렌더링 -->
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.id}"></td>
+                <td th:text="${post.member.username}"></td>
+                <td><img th:src="|/post/images/${post.imageFiles[0].getStoreFileName()}|" style="width: 300px; height:300px"/></td>
+                <td th:text="${post.comment}"></td>
+                <td>
+                    <form th:action="|/admin/delete/${post.id}|" method="post" onsubmit="return confirm('정말 삭제하시겠습니까? 되돌릴 수 없습니다.');">
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // JavaScript를 이용한 탭 기능 구현
+    function showTab(tabId) {
+        var contents = document.querySelectorAll('.tab-content');
+        var tabs = document.querySelectorAll('.tabs');
+
+        contents.forEach(content => content.classList.remove('active'));
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        document.querySelector(`.tabs[onclick="showTab('${tabId}')"]`).classList.add('active');
+    }
+
+    // 기본적으로 첫 번째 탭을 활성화
+    showTab('manageMemberTab');
+</script>
+
+
+</body>
+</html>

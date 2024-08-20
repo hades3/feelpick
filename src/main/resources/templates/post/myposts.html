@@ -2,31 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Posts</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <title>Feel Pick!</title>
+    <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-<h2>My Posts</h2>
-<div class="posts-container">
-    <div th:each="post : ${posts}" class="post">
-        <p class="post-author">- <span th:text="${post.member.username}"></span></p>
-        <div th:each="imageFile : ${post.imageFiles}">
-            <img th:src="|/post/images/${imageFile.storeFileName}|" style="width:100px; height:auto;">
-        </div>
-        <div class="post-content">
-            <p th:text="${post.comment}"></p>
 
-            <!-- 수정 및 삭제 버튼 -->
-            <div class="post-actions">
-                <form th:action="|/member/mypage/posts/modify/${post.id}|" method="get">
-                    <button type="submit" class="btn-delete">수정</button>
-                </form>
+<div class="navbar">
+    <div class="left">
+        <a href="/">Feel Pick!</a>
+    </div>
+</div>
 
-                <form th:action="|/member/mypage/posts/delete/${post.id}|" method="post" onsubmit="return confirm('정말 삭제를 원하십니까? 되돌릴 수 없습니다.');">
-                    <button type="submit" class="btn-delete">삭제</button>
-                </form>
-            </div>
+<h1>내가 쓴 글</h1>
+<div class="post" th:each="post : ${posts}" >
+    <div th:each="imageFile : ${post.imageFiles}">
+        <img class="post-image" th:src="|/post/images/${imageFile.storeFileName}|">
+    </div>
+    <div class="post-content">
+        <div class="post-comment" th:text="${post.comment}"></div>
+        <div class="post-date" th:text="|${post.createdDateTime.toLocalDate()} ${post.createdDateTime.getHour()}:${post.createdDateTime.getMinute()}|"></div>
+
+        <div class="post-modify">
+            <form th:action="|/member/mypage/posts/modify/${post.id}|" method="get">
+                <button type="submit">수정</button>
+            </form>
         </div>
+
+        <div class="post-delete">
+            <form th:action="|/member/mypage/posts/delete/${post.id}|" method="post" onsubmit="return confirm('정말 삭제를 원하십니까? 되돌릴 수 없습니다.');">
+                <button type="submit">삭제</button>
+            </form>
+        </div>
+
     </div>
 </div>
 </body>

@@ -11,4 +11,6 @@ public class MemberDto {
 
     private String password;
 
+    private String confirm_password;
+
 }

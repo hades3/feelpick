@@ -2,43 +2,64 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Feel Pick!</title>
+    <meta th:charset="utf-8">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<h1>Feel Pick!</h1>
 
-<span th:text="|${member.username}님 환영합니다.|"></span>
-
-<div class="container">
-    <a href="/member/logout" >로그아웃</a>
-    <a href="/member/mypage" >마이페이지</a>
+<div class="navbar">
+    <div class="left">
+        <a href="">Feel Pick!</a>
+    </div>
+    <div class="right">
+        <div th:text="|${member.username}님 환영합니다.|"></div><br>
+        <a href="/member/logout" >로그아웃</a>
+        <a href="/member/mypage" >마이페이지</a>
+    </div>
 </div>
 
-<!-- 사용자 입력 폼 -->
-<form th:action="@{/food/recommend}" th:object="${choiceDto}" method="post">
-    <label th:for="*{mood}">지금 나의 현재 기분은 </label>
-    <select th:field="*{mood}">
-        <option value="기쁨">기쁨</option>
-        <option value="우울">우울</option>
-        <option value="슬픔">슬픔</option>
-        <option value="분노">분노</option>
-    </select>
+<h1>Feel Pick!</h1>
+<h2>지금 기분이 어떤가요? AI가 기분에 따라 음식을 추천해줄거에요!</h2>
 
-    <label th:for="*{type}">원하는 종류는 </label>
-    <select th:field="*{type}">
-        <option value="한식">한식</option>
-        <option value="양식">양식</option>
-        <option value="일식">일식</option>
-        <option value="중식">중식</option>
-    </select>
-    <button type="submit">추천해주세요</button>
-</form>
+<!-- 사용자 입력 폼 -->
+<div class="choice">
+    <form th:action="@{/food/recommend}" th:object="${choiceDto}" method="post">
+        <div class="choice-mood">
+            <label th:for="*{mood}">지금 나의 기분은 </label>
+            <select th:field="*{mood}">
+                <option value="우울">우울😔</option>
+                <option value="슬픔">슬픔😭</option>
+                <option value="분노">분노😡</option>
+            </select>
+        </div>
+
+        <div class="choice-type">
+            <label th:for="*{type}">원하는 종류는 </label>
+            <select th:field="*{type}">
+                <option value="Korean Food">한식🥘</option>
+                <option value="Western Food">양식🍝</option>
+                <option value="Japanese Food">일식🍣</option>
+                <option value="Chinese Food">중식🥟</option>
+                <option value="dessert">디저트🍧</option>
+                <option value="아무거나">아무거나</option>
+            </select>
+        </div>
+
+        <div class="choice-button">
+            <button type="submit">추천해주세요</button>
+        </div>
+    </form>
+</div>
 
 <!-- 음식 랭킹 표시 -->
-<div th:if="${rankings}">
-    <h2>Today's Food Rankings</h2>
-    <ol>
-        <li th:each="food : ${rankings}" th:text="${food}"></li>
-    </ol>
+<div class="ranking" th:if="${ranking}">
+    <h2>오늘 다른 사람들이 많이 요리한 음식이에요</h2>
+    <ul>
+        <li th:if="${ranking[0] != null}" th:text="|🥇 ${ranking[0][0]} : ${ranking[0][1]}|"></li>
+        <li th:if="${ranking[0] == null}" th:text="|오늘 작성된 인증글이 없어요. 오늘의 첫 주인공이 되어보세요!|"></li>
+        <li th:if="${ranking[1] != null}" th:text="|🥈 ${ranking[1][0]} : ${ranking[1][1]}|"></li>
+        <li th:if="${ranking[2] != null}" th:text="|🥉 ${ranking[2][0]} : ${ranking[2][1]}|"></li>
+    </ul>
 </div>
 
 </body>

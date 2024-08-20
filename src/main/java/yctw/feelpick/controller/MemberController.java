@@ -46,6 +46,10 @@ public class MemberController {
         HttpSession session = request.getSession();
         session.setAttribute("LOGIN_MEMBER", loginMember);
 
+        if (loginMember.getUsername().equals("admin") && loginMember.getPassword().equals("dlrjswjfeoahfmrpTwl")){
+            return "redirect:/admin";
+        }
+
         return "redirect:/";
     }
 
@@ -66,6 +70,9 @@ public class MemberController {
 
     @PostMapping("/member/register")
     public String register(@ModelAttribute(name = "memberDto") MemberDto memberDto){
+        if (!memberDto.getPassword().equals(memberDto.getConfirm_password())){
+            throw new IllegalStateException("입력한 두 비밀번호가 일치하지 않습니다.");
+        }
         Member member = Member.createMember(memberDto);
         memberService.join(member);
         return "redirect:/";
@@ -75,6 +82,7 @@ public class MemberController {
     public String myPage(Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
         Member loginMember = (Member)session.getAttribute("LOGIN_MEMBER");
+        loginMember = memberService.findMember(loginMember.getId());
         model.addAttribute("passwordDto", new PasswordDto());
         model.addAttribute("member", loginMember);
         return "member/mypage";
@@ -117,7 +125,7 @@ public class MemberController {
         Post post = postService.findPost(postId);
         ModifyDto modifyDto = new ModifyDto();
         modifyDto.setComment(post.getComment());
-        modifyDto.setImageFiles(post.getImageFiles());
+        modifyDto.setOldImageFiles(post.getImageFiles());
 
         model.addAttribute("modifyDto", modifyDto);
         model.addAttribute("/member/mypage/posts/modify/" + post.getId());

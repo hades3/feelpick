@@ -37,9 +37,11 @@ public class PostController {
     private final UploadFileService uploadFileService;
 
     @GetMapping("/post/create/{foodId}")
-    public String writeForm(@PathVariable(name = "foodId") Long foodId, Model model){
+    public String writeForm(@PathVariable(name = "foodId") Long foodId, Model model) throws IOException{
+        Food food = foodRepository.findOne(foodId);
         model.addAttribute("foodId", foodId);
         model.addAttribute("postDto", new PostDto());
+        model.addAttribute("returnAddress", "/food/foodInfo/" + URLEncoder.encode(food.getName(), "UTF-8"));
         return "post/createpost";
     }
 
@@ -75,25 +77,28 @@ public class PostController {
     }
 
     @GetMapping("/post/modify/{postId}")
-    public String modifyForm(@PathVariable(name = "postId") Long postId, Model model){
+    public String modifyForm(@PathVariable(name = "postId") Long postId, Model model) throws IOException {
         Post post = postService.findPost(postId);
         ModifyDto modifyDto = new ModifyDto();
         modifyDto.setComment(post.getComment());
-        modifyDto.setImageFiles(post.getImageFiles());
+        modifyDto.setOldImageFiles(post.getImageFiles());
 
         model.addAttribute("modifyDto", modifyDto);
 
         String postAddress = "/post/modify/" + postId;
+        String returnAddress = "/food/foodInfo/" + URLEncoder.encode(post.getFood().getName(), "UTF-8");
         model.addAttribute("postAddress", postAddress);
+        model.addAttribute("returnAddress", returnAddress);
         return "post/modifypost";
     }
 
     @PostMapping("/post/modify/{postId}")
     public String modifyMyPost(@PathVariable(name = "postId") Long postId, @ModelAttribute ModifyDto modifyDto) throws IOException{
+        List<UploadFile> imageFiles = uploadFileService.storeFiles(modifyDto.getNewImageFiles());
+        String comment = modifyDto.getComment();
+
         Post post = postService.findPost(postId);
-        post.setComment(modifyDto.getComment());
-        System.out.println("post.getComment() = " + post.getComment());
-        post.setModifiedTime(LocalDateTime.now());
+        post.modifyPost(imageFiles, comment);
 
         Food food = post.getFood();
         return "redirect:/food/foodInfo/" + URLEncoder.encode(food.getName(), "UTF-8");

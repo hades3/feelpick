@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Feel Pick!</title>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-<h2>Login</h2>
+
+<div class="navbar">
+    <div class="left">
+        <a href="/">Feel Pick!</a>
+    </div>
+</div>
+
+<h1>로그인</h1>
+<h2>Feel Pick의 멤버는 내가 만든 요리를 공유할 수 있어요!</h2>
+
+<div class="login">
 <form th:action="@{/member/login}" method="post" th:object="${memberDto}">
-    <div>
-        <label th:for="${memberDto.username}">Username:</label>
-        <input type="text" th:field="${memberDto.username}" required />
+    <div class="login-username">
+        <input type="text" th:field="${memberDto.username}" th:placeholder="|사용자 이름|" required />
     </div>
-    <div>
-        <label th:for="${memberDto.password}">Password:</label>
-        <input type="password" th:field="${memberDto.password}" required />
+    <div class="login-password">
+        <input type="password" th:field="${memberDto.password}" th:placeholder="|비밀번호|" required />
     </div>
-    <div>
-        <button type="submit">Login</button>
-    </div>
+
+    <button type="submit">로그인</button>
 </form>
-<p>Don't have an account? <a th:href="@{/member/register}">Sign up here</a></p>
+</div>
+
+<p>계정이 없으신가요? <a href="/member/register">여기</a>에서 가입할 수 있어요.</p>
+
 </body>
 </html>

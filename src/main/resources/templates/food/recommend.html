@@ -2,29 +2,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <title>Feel Pick!</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>feelpick</title>
-    <style>
-        .menuItem {
-            padding: 10px;
-            margin: 5px;
-            background-color: #f0f0f0;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .highlight {
-            background-color: #4caf50;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="/style.css" />
 </head>
+
 <body>
-<h1>메뉴 랜덤 선택</h1>
+
+<div class="navbar">
+    <div class="left">
+        <a href="/">Feel Pick!</a>
+    </div>
+</div>
+
+<h1>메뉴 추천</h1>
+<h2>AI가 추천한 메뉴에요. 선택이 어렵다면, 랜덤 선택 기능을 이용해보세요!</h2>
+
 <div id="menuList" th:each="food: ${foods}">
     <div class="menuItem"><a th:href="|/food/foodInfo/${food}|" th:text="${food}"></a></div>
 </div>
-<button onclick="highlightRandomMenu()">하이라이트 메뉴 선택</button>
+
+<form action="/food/recommend" id="re-recommend" method="post">
+    <input type="hidden" name="choiceDto" th:value="${choiceDto}" />
+</form>
+
+<button onclick="highlightRandomMenu()" class="button-left">랜덤 선택</button>
+<button type="submit" form="re-recommend" class="button-right">다시 추천</button>
 
 <script>
     function highlightRandomMenu() {
@@ -40,5 +43,6 @@
         menuItems[currentIndex].classList.add("highlight");
     }
 </script>
+
 </body>
 </html>

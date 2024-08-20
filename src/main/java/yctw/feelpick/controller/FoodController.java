@@ -23,18 +23,19 @@ public class FoodController {
     private final FoodRepository foodRepository;
 
     @GetMapping("/recommend")
-    public String recommendList(@ModelAttribute(name = "response") String response, Model model) {
+    public String recommendList(@ModelAttribute(name = "response") String response, @ModelAttribute(name="choiceDto") ChoiceDto choiceDto, Model model) {
         String[] foods = response.split(", ");
         model.addAttribute("foods", foods);
+        model.addAttribute("choiceDto", choiceDto);
         return "/food/recommend";
     }
 
     @PostMapping("/recommend")
     public String recommendMenu(@ModelAttribute(name = "choiceDto") ChoiceDto choiceDto, RedirectAttributes redirectAttributes) {
-        String prompt = "기분이 " + choiceDto.getMood() + "일 때, " + choiceDto.getType() + " 중에서 사람들이 많이 먹은 배달 음식의 구체적인 이름 5개를 반드시 ','로 구분해서 알려줘. 각각 간단하게 추천 이유를 말해줘. 예를 들어, 피자, 치킨, 햄버거, 족발, 보쌈 이런 식으로 대답해야 해.";
+        String prompt = "기분이 " + choiceDto.getMood() + "일 때, " + choiceDto.getType() + " 중에서 사람들이 많이 먹은 배달 음식의 구체적인 이름 5개를 반드시 ','로 구분해서 알려줘. 예를 들어, 피자, 치킨, 햄버거, 족발, 보쌈 이런 식으로 대답해야 해.";
         String response = vertexAiGeminiChatModel.call(prompt);
         redirectAttributes.addFlashAttribute("response", response);
-        System.out.println("response = " + response);
+        redirectAttributes.addFlashAttribute("choiceDto", choiceDto);
         return "redirect:/food/recommend";
     }
 

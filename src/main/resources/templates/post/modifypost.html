@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>요리 인증 수정</title>
+    <title>Feel Pick!</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-<h1>요리 인증 글 수정</h1>
 
-<form th:action="${postAddress}" method="post" enctype="multipart/form-data" th:object="${modifyDto}">
-    <div th:each="imageFile : *{imageFiles}">
-        <img th:src="|/post/images/${imageFile.storeFileName}|" style="width:100px; height:auto;">
+<div class="navbar">
+    <div class="left">
+        <a href="/">Feel Pick!</a>
     </div>
+</div>
 
-    <div>
-        <label th:for="*{comment}">한마디:</label>
-        <textarea th:field="*{comment}" rows="4" cols="50" th:placeholder="*{comment}"></textarea>
-    </div>
-    <div>
-        <button type="submit">수정</button>
-    </div>
+<h1>작성 글 수정하기</h1>
+<h2>내가 썼던 글을 수정해요</h2>
+
+<div th:object="${modifyDto}" style="margin-bottom: 20px">
+<div th:each="imageFile : *{oldImageFiles}">
+    <img th:src="|/post/images/${imageFile.storeFileName}|">
+</div>
+</div>
+
+<form th:action="${postAddress}" method="post" enctype="multipart/form-data" id="modify-form" th:object="${modifyDto}">
+    <textarea name="comment" rows="10" cols="50" autofocus="autofocus" th:text="*{comment}"></textarea><br>
+    <input type="file" id="newImageFiles" name="newImageFiles" multiple="multiple" style="display: none" required><br>
+    <label class="image-label" for="newImageFiles">변경 사진 선택</label>
+    <span id="image-span" class="image-span">선택된 사진이 없습니다.</span>
 </form>
+
+<form id="modify-cancel" th:action="${returnAddress}" method="get" onsubmit="return confirm('수정을 취소하시겠습니까?');">
+</form>
+
+<button type="submit" form="modify-form" class="button-left">수정</button>
+<button type="submit" form="modify-cancel" class="button-right">취소</button>
+
+<script>
+    const fileInput = document.getElementById('newImageFiles');
+    const fileName = document.getElementById('image-span');
+
+    fileInput.addEventListener('change', function() {
+        if (fileInput.files.length > 0) {
+            fileName.textContent = fileInput.files[0].name;
+        }
+        else{
+            fileName.textContent = "변경을 위해 선택된 사진이 없습니다.";
+        }
+    });
+
+</script>
+
 </body>
 </html>
