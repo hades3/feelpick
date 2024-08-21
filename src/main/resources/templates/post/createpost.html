@@ -15,11 +15,11 @@
 </div>
 
 <h1>내가 만든 요리 자랑하기</h1>
-<h2>요리와 함께한 순간을 기록해보세요!</h2>
+<h2>요리와 함께 가장 기억하고 싶은 한 순간을 기록해보세요!</h2>
 
 <form th:action="|/post/create/${foodId}|" method="post" enctype="multipart/form-data" id="write-form" th:object="${postDto}">
   <textarea name="comment" rows="10" cols="50" autofocus="autofocus"></textarea><br>
-  <input type="file" id="imageFiles" name="imageFiles" multiple="multiple" style="display: none" required><br>
+  <input type="file" id="imageFiles" name="imageFiles" style="display: none" required><br>
   <label class="image-label" for="imageFiles">사진 업로드</label>
   <span id="image-span" class="image-span">선택된 사진이 없습니다.</span>
 </form>

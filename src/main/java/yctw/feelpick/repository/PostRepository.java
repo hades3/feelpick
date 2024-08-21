@@ -33,8 +33,14 @@ public class PostRepository {
         em.remove(post);
     }
 
-    public List<Post> findAllById(Long id) {
-        List<Post> resultList = em.createQuery("select p from Post p where p.member.id = :id", Post.class).setParameter("id", id)
+    public List<Post> findAllByMemberId(Long id) {
+        List<Post> resultList = em.createQuery("select p from Post p where p.member.id = :id order by p.createdDateTime desc", Post.class).setParameter("id", id)
+                .getResultList();
+        return resultList;
+    }
+
+    public List<Post> findAllByFoodId(Long id) {
+        List<Post> resultList = em.createQuery("select p from Post p where p.food.id = :id order by p.createdDateTime desc", Post.class).setParameter("id", id)
                 .getResultList();
         return resultList;
     }

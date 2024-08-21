@@ -34,7 +34,11 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<Post> findPostByMemberId(Long id){
-        return postRepository.findAllById(id);
+    public List<Post> findPostByMemberId(Long memberId){
+        return postRepository.findAllByMemberId(memberId);
+    }
+
+    public List<Post> findPostByFoodId(Long foodId){
+        return postRepository.findAllByFoodId(foodId);
     }
 }

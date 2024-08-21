@@ -323,6 +323,6 @@ textarea {
 .change-message {
     font-size: 15px;
     margin-top: 10px;
-    margin-bottom: 5;
+    margin-bottom: 5px;
     color: red;
 }

@@ -29,7 +29,7 @@
 <div class="foodinfo show_off">
 <h2>오늘의 요리 자랑☺️</h2>
 <h3><a th:if="${session.LOGIN_MEMBER != null}" th:href="|/post/create/${food.id}|" class="button">나도 자랑할래요</a></h3>
-  <div class="post" th:each="post : ${food.posts}">
+  <div class="post" th:each="post : ${posts}">
     <div th:each="imageFile : ${post.imageFiles}">
       <img th:src="|/post/images/${imageFile.storeFileName}|" >
     </div>

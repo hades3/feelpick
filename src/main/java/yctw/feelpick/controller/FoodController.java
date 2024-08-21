@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import yctw.feelpick.domain.Food;
+import yctw.feelpick.domain.Post;
 import yctw.feelpick.dto.ChoiceDto;
 import yctw.feelpick.repository.FoodRepository;
+import yctw.feelpick.service.PostService;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class FoodController {
 
     private final VertexAiGeminiChatModel vertexAiGeminiChatModel;
     private final FoodRepository foodRepository;
+    private final PostService postService;
 
     @GetMapping("/recommend")
     public String recommendList(@ModelAttribute(name = "response") String response, @ModelAttribute(name="choiceDto") ChoiceDto choiceDto, Model model) {
@@ -50,7 +53,11 @@ public class FoodController {
         else{
             food = foods.get(0);
         }
+
+        List<Post> posts = postService.findPostByFoodId(food.getId());
         model.addAttribute("food", food);
+        model.addAttribute("posts", posts);
+
         return "food/foodinfo";
     }
 }
