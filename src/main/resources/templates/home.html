@@ -53,7 +53,7 @@
 
 <!-- 음식 랭킹 표시 -->
 <div class="ranking" th:if="${ranking}">
-    <h2>오늘 다른 사람들이 많이 요리한 음식이에요</h2>
+    <h2>오늘 다른 사람들이 많이 먹은 음식이에요</h2>
     <ul>
         <li th:if="${ranking[0] != null}" th:text="|🥇 ${ranking[0][0]} : ${ranking[0][1]}|"></li>
         <li th:if="${ranking[0] == null}" th:text="|오늘 작성된 인증글이 없어요. 오늘의 첫 주인공이 되어보세요!|"></li>

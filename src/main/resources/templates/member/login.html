@@ -25,6 +25,8 @@
         <input type="password" th:field="${memberDto.password}" th:placeholder="|비밀번호|" required />
     </div>
 
+    <div class="login-message" th:text="${loginResult == 'fail' ? '사용자 이름 또는 비밀번호가 올바르지 않습니다.' : ''}"></div>
+
     <button type="submit">로그인</button>
 </form>
 </div>

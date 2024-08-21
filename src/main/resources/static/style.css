@@ -255,6 +255,9 @@ textarea {
     color: white;
 }
 
+.hide {
+    display: none;
+}
 
 .image-label {
     width: 100px;
@@ -284,4 +287,42 @@ textarea {
     text-overflow: ellipsis;
     white-space: nowrap;
     box-sizing: border-box;
+}
+
+.validate-check {
+    background-color: #999999;
+    border-radius: 10px;
+    border: 1px solid #999999;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    margin-left: 15px;
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 10px 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.register-message {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: red;
+}
+
+.login-message {
+    font-size: 20px;
+    margin-top: 20px;
+    color: red;
+}
+
+.change-message {
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 5;
+    color: red;
 }

@@ -17,18 +17,22 @@
 <h2>Feel Pick의 회원이 되어 내가 만든 요리를 자랑해보아요!</h2>
 
 <div class="register">
-<form th:action="@{/member/register}" method="post" th:object="${memberDto}">
+<form th:action="@{/member/register}" method="post" th:object="${memberDto}"  onsubmit="return validateAccount()">
     <div class="register-username">
-        <input type="text" th:field="*{username}" th:placeholder="|사용자 이름|" oninput="validateUsername()" required />
+        <input class="username" type="text" th:field="*{username}" th:placeholder="|사용자 이름|" onkeyup="validateUsername()" required />
+        <button class="validate-check" type="button" onclick="validateDuplicateUsername()">중복확인</button>
     </div>
+    <div class="register-message username-message"></div>
 
     <div class="register-password">
-        <input type="password" th:field="*{password}" th:placeholder="|비밀번호|" required />
+        <input class="password" type="password" th:field="*{password}" th:placeholder="|비밀번호|" onkeyup="validatePassword()" required />
     </div>
+    <div class="register-message password-message hide"></div>
 
     <div class="register-confirm">
-        <input type="password" th:field="*{confirm_password}" th:placeholder="|비밀번호 확인|" required />
+        <input class="confirm-password" type="password" th:field="*{confirm_password}" th:placeholder="|비밀번호 확인|" onkeyup="validateConfirm()" required />
     </div>
+    <div class="register-message confirm-message hide"></div>
 
     <button type="submit">회원가입</button>
 </form>
@@ -36,5 +40,6 @@
 
 <p>이미 계정이 있으신가요? <a th:href="@{/member/login}">여기</a>에서 로그인할 수 있어요.</p>
 
+<script src="/script.js"></script>
 </body>
 </html>

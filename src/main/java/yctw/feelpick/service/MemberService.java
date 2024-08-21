@@ -18,7 +18,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public Long join(Member member) {
-        validateDuplicateMember(member);
         memberRepository.save(member);
         return member.getId();
     }
@@ -37,26 +36,12 @@ public class MemberService {
         memberRepository.remove(member);
     }
 
-    private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findByUsername(member.getUsername());
-        if(!findMembers.isEmpty()){
-            throw new IllegalStateException("이미 존재하는 회원입니다");
-        }
+    public boolean validateDuplicateUsername(String username){
+        List<Member> findMembers = memberRepository.findByUsername(username);
+        return findMembers.isEmpty();
     }
 
-    public void changePassword(Long id, PasswordDto passwordDto){
-        Member loginMember = memberRepository.findOne(id);
-
-        if (!(loginMember.getPassword().equals(passwordDto.getCurrentPassword()))){
-            throw new IllegalStateException("현재 비밀번호가 올바르지 않습니다.");
-        }
-        if (!(passwordDto.getNewPassord().equals(passwordDto.getConfirmPassord()))) {
-            throw new IllegalStateException("새로운 비밀번호가 일치하지 않습니다.");
-        }
-        loginMember.setPassword(passwordDto.getNewPassord());
-    }
-
-    public Member logIn(MemberDto memberDto){
+    public Member login(MemberDto memberDto){
         List<Member> findMembers = memberRepository.findByUsername(memberDto.getUsername());
         if (findMembers.isEmpty()){
             return null;

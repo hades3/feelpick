@@ -9,8 +9,8 @@ public class PasswordDto {
 
     private String currentPassword;
 
-    private String newPassord;
+    private String newPassword;
 
-    private String confirmPassord;
+    private String confirmPassword;
 
 }
