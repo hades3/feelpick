@@ -18,7 +18,7 @@ public class Post {
     @Column(name = "POST_ID")
     private Long id;
 
-    private String comment;
+    private String content;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UploadFile> imageFiles = new ArrayList<>();
@@ -36,14 +36,14 @@ public class Post {
     private LocalDateTime modifiedDateTime;
 
     // 생성 메서드
-    public static Post createPost(Member member, Food food, List<UploadFile> imageFiles, String comment){
+    public static Post createPost(Member member, Food food, List<UploadFile> imageFiles, String content){
         Post post = new Post();
         post.setMember(member);
         for (UploadFile imageFile : imageFiles) {
             post.getImageFiles().add(imageFile);
             imageFile.setPost(post);
         }
-        post.setComment(comment);
+        post.setContent(content);
         post.setFood(food);
         post.setCreatedDateTime(LocalDateTime.now());
         post.setModifiedDateTime(post.getCreatedDateTime());
@@ -54,7 +54,7 @@ public class Post {
     }
 
     // 수정 메서드
-    public void modifyPost(List<UploadFile> imageFiles, String comment) {
+    public void modifyPost(List<UploadFile> imageFiles, String content) {
         if (!imageFiles.isEmpty()){
             this.getImageFiles().removeAll(getImageFiles());
             for (UploadFile imageFile : imageFiles) {
@@ -63,6 +63,6 @@ public class Post {
             }
         }
         this.setModifiedDateTime(LocalDateTime.now());
-        this.setComment(comment);
+        this.setContent(content);
     }
 }

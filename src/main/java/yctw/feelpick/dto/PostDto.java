@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 public class PostDto {
 
-    private String comment;
+    private String content;
 
     private List<MultipartFile> imageFiles;
 

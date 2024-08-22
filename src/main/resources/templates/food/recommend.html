@@ -15,15 +15,16 @@
     </div>
 </div>
 
-<h1>메뉴 추천</h1>
-<h2>AI가 추천한 메뉴에요. 선택이 어렵다면, 랜덤 선택 기능을 이용해보세요!</h2>
+<h1>AI가 추천한 메뉴</h1>
+<h2>선택이 어려울 땐 랜덤 선택 또는 다시 추천 기능을 이용해보세요!</h2>
 
 <div id="menuList" th:each="food: ${foods}">
     <div class="menuItem"><a th:href="|/food/foodInfo/${food}|" th:text="${food}"></a></div>
 </div>
 
-<form action="/food/recommend" id="re-recommend" method="post">
-    <input type="hidden" name="choiceDto" th:value="${choiceDto}" />
+<form action="/food/recommend" id="re-recommend" method="post" th:object="${choiceDto}">
+    <input type="hidden" th:field="*{mood}" th:value="*{mood}"/>
+    <input type="hidden" th:field="*{type}" th:value="*{type}"/>
 </form>
 
 <button onclick="highlightRandomMenu()" class="button-left">랜덤 선택</button>

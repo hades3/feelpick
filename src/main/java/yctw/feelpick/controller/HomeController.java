@@ -31,7 +31,7 @@ public class HomeController {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime startOfDay = now.toLocalDate().atStartOfDay();
         LocalDateTime endOfDay = startOfDay.plusDays(1);
-        List<Object[]> ranking = em.createQuery("select p.food.name, count(*) as post_count from Post p where p.createdDateTime >= :startOfDay and p.createdDateTime < :endOfDay GROUP BY p.food.id order by post_count desc limit 3", Object[].class).setParameter("startOfDay", startOfDay).setParameter("endOfDay", endOfDay).getResultList();
+        List<Object[]> ranking = em.createQuery("select p.food.name, count(*) as post_count from Post p where p.createdDateTime >= :startOfDay and p.createdDateTime < :endOfDay GROUP BY p.food.name order by post_count desc limit 3", Object[].class).setParameter("startOfDay", startOfDay).setParameter("endOfDay", endOfDay).getResultList();
 
         int size = ranking.size();
 

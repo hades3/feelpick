@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 public class ModifyDto {
 
-    private String comment;
+    private String content;
 
     private List<UploadFile> oldImageFiles;
 

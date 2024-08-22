@@ -18,8 +18,8 @@
     <div th:each="imageFile : ${post.imageFiles}">
         <img class="post-image" th:src="|/post/images/${imageFile.storeFileName}|">
     </div>
-    <div class="post-content">
-        <div class="post-comment" th:text="${post.comment}"></div>
+    <div class="post-form">
+        <div class="post-content" th:text="${post.content}"></div>
         <div class="post-date" th:text="|${post.createdDateTime.toLocalDate()} ${post.createdDateTime.getHour()}:${post.createdDateTime.getMinute()}|"></div>
 
         <div class="post-modify">

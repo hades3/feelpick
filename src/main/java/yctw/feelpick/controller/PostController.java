@@ -48,14 +48,14 @@ public class PostController {
     @PostMapping("/post/create/{foodId}")
     public String writePost(@PathVariable(name = "foodId") Long foodId, @ModelAttribute(name = "postDto") PostDto postDto, HttpServletRequest request) throws IOException {
         List<UploadFile> imageFiles = uploadFileService.storeFiles(postDto.getImageFiles());
-        String comment = postDto.getComment();
+        String content = postDto.getContent();
 
         HttpSession session = request.getSession();
         Member loginMember = (Member)session.getAttribute("LOGIN_MEMBER");
 
         Food food = foodRepository.findOne(foodId);
 
-        Post post = Post.createPost(loginMember, food, imageFiles, comment);
+        Post post = Post.createPost(loginMember, food, imageFiles, content);
 
         postService.write(post);
 
@@ -80,7 +80,7 @@ public class PostController {
     public String modifyForm(@PathVariable(name = "postId") Long postId, Model model) throws IOException {
         Post post = postService.findPost(postId);
         ModifyDto modifyDto = new ModifyDto();
-        modifyDto.setComment(post.getComment());
+        modifyDto.setContent(post.getContent());
         modifyDto.setOldImageFiles(post.getImageFiles());
 
         model.addAttribute("modifyDto", modifyDto);
@@ -95,10 +95,10 @@ public class PostController {
     @PostMapping("/post/modify/{postId}")
     public String modifyMyPost(@PathVariable(name = "postId") Long postId, @ModelAttribute ModifyDto modifyDto) throws IOException{
         List<UploadFile> imageFiles = uploadFileService.storeFiles(modifyDto.getNewImageFiles());
-        String comment = modifyDto.getComment();
+        String content = modifyDto.getContent();
 
         Post post = postService.findPost(postId);
-        post.modifyPost(imageFiles, comment);
+        post.modifyPost(imageFiles, content);
 
         Food food = post.getFood();
         return "redirect:/food/foodInfo/" + URLEncoder.encode(food.getName(), "UTF-8");

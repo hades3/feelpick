@@ -148,4 +148,4 @@ function showTab(tabId) {
 }
 
 // 기본적으로 첫 번째 탭을 활성화
-showTab('changePasswordTab');
+showTab('changePasswordTab')

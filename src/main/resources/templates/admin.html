@@ -67,7 +67,7 @@
                 <td th:text="${post.id}"></td>
                 <td th:text="${post.member.username}"></td>
                 <td><img th:src="|/post/images/${post.imageFiles[0].getStoreFileName()}|" style="width: 300px; height:300px"/></td>
-                <td th:text="${post.comment}"></td>
+                <td th:text="${post.content}"></td>
                 <td>
                     <form th:action="|/admin/delete/${post.id}|" method="post" onsubmit="return confirm('정말 삭제하시겠습니까? 되돌릴 수 없습니다.');">
                         <button type="submit">삭제</button>

@@ -143,7 +143,7 @@ public class MemberController {
     public String modifyForm(@PathVariable(name = "postId") Long postId, Model model){
         Post post = postService.findPost(postId);
         ModifyDto modifyDto = new ModifyDto();
-        modifyDto.setComment(post.getComment());
+        modifyDto.setContent(post.getContent());
         modifyDto.setOldImageFiles(post.getImageFiles());
 
         model.addAttribute("modifyDto", modifyDto);
@@ -154,10 +154,10 @@ public class MemberController {
     @PostMapping("/mypage/posts/modify/{postId}")
     public String modifyMyPost(@PathVariable(name = "postId") Long postId, @ModelAttribute(name = "modifyDto") ModifyDto modifyDto) throws IOException {
         List<UploadFile> imageFiles = uploadFileService.storeFiles(modifyDto.getNewImageFiles());
-        String comment = modifyDto.getComment();
+        String content = modifyDto.getContent();
 
         Post post = postService.findPost(postId);
-        post.modifyPost(imageFiles, comment);
+        post.modifyPost(imageFiles, content);
 
         return "redirect:/member/mypage/posts";
     }

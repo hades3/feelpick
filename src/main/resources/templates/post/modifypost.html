@@ -23,8 +23,8 @@
 </div>
 
 <form th:action="${postAddress}" method="post" enctype="multipart/form-data" id="modify-form" th:object="${modifyDto}">
-    <textarea name="comment" rows="10" cols="50" autofocus="autofocus" th:text="*{comment}"></textarea><br>
-    <input type="file" id="newImageFiles" name="newImageFiles" multiple="multiple" style="display: none" required><br>
+    <textarea name="content" rows="10" cols="50" autofocus="autofocus" th:text="*{content}"></textarea><br>
+    <input type="file" id="newImageFiles" name="newImageFiles" multiple="multiple" style="display: none"><br>
     <label class="image-label" for="newImageFiles">변경 사진 선택</label>
     <span id="image-span" class="image-span">선택된 사진이 없습니다.</span>
 </form>

@@ -1,8 +1,0 @@
-###
-GET http://localhost:8080/api/chat
-
-{
-    "message" : "치킨은 어떻게 만드는지 알려줘."
-}
-
-###
