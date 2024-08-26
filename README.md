@@ -118,3 +118,4 @@ Feel Pick은 사용자의 기분 상태와 추가 사항을 입력받아 AI가 �
 # 5. 트러블 슈팅
 + <a href="https://hades1.tistory.com/145">어떤 게시물을 삭제해도 맨 앞의 게시물이 삭제되는 이슈</a>
 + <a href="https://hades1.tistory.com/148">음식 이름에 띄어쓰기가 있는 경우, 게시글이 기획한 대로 작성되지 않는 이슈</a>
++ <a href="https://hades1.tistory.com/149">동시성으로 인한 중복 가입 이슈</a>
