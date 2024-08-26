@@ -1,11 +1,11 @@
 package yctw.feelpick.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yctw.feelpick.domain.Member;
 import yctw.feelpick.dto.MemberDto;
-import yctw.feelpick.dto.PasswordDto;
 import yctw.feelpick.repository.MemberRepository;
 
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Long join(Member member) {
         memberRepository.save(member);
@@ -42,6 +43,7 @@ public class MemberService {
     }
 
     public Member login(MemberDto memberDto){
+
         List<Member> findMembers = memberRepository.findByUsername(memberDto.getUsername());
         if (findMembers.isEmpty()){
             return null;
@@ -49,7 +51,7 @@ public class MemberService {
 
         Member findMember = findMembers.get(0);
 
-        if (findMember.getPassword().equals(memberDto.getPassword())){
+        if (bCryptPasswordEncoder.matches(memberDto.getPassword(), findMember.getPassword())) {
             return findMember;
         }
 

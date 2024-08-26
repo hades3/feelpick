@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <title>Feel Pick!</title>
     <meta th:charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -25,7 +26,7 @@
 <div class="choice">
     <form th:action="@{/food/recommend}" th:object="${choiceDto}" method="post">
         <div class="choice-mood">
-            <label th:for="*{mood}">지금 나의 기분은 </label>
+            <label th:for="mood">지금 나의 기분은 </label>
             <select th:field="*{mood}">
                 <option value="우울">우울😔</option>
                 <option value="슬픔">슬픔😭</option>
@@ -35,7 +36,7 @@
         </div>
 
         <div class="choice-type">
-            <label th:for="*{type}">원하는 종류는 </label>
+            <label th:for="type">원하는 종류는 </label>
             <select th:field="*{type}">
                 <option value="Korean Food">한식🥘</option>
                 <option value="Chinese Food">중식🥟</option>
