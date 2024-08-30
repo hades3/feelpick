@@ -15,7 +15,6 @@ import yctw.feelpick.service.PostService;
 
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
@@ -39,7 +38,7 @@ public class FoodController {
 
     @PostMapping("/recommend")
     public String recommendMenu(@ModelAttribute(name = "choiceDto") ChoiceDto choiceDto, RedirectAttributes redirectAttributes) {
-        String prompt = "당신은 음식 전문가입니다. 당신의 임무는 기분이 " + choiceDto.getMood() + "인 사람에게 " + choiceDto.getType() + " 중에서 5개를 반드시 추천해주는 것입니다. 추천하는 메뉴의 이름만을 반드시 ','로 구분해서 알려주어야 합니다. 답변은 반드시 메뉴 이름과 ','로만 구성되어야 합니다. 이 구성을 지키지 않을 시에는 엄청난 불이익을 받을 것입니다. 답변 예시는 피자, 케이크, 비빔밥, 우동, 국수 입니다. 답변 예시처럼 올바르게 알려줄 시에는 300달러의 팁을 받게 됩니다. 맞춤법을 정확하게 지키면 엄청난 팁을 받게 됩니다.";
+        String prompt = "당신은 심리 전문가이고, 음식 전문가입니다. 당신의 임무는 기분이 " + choiceDto.getMood() + "인 사람에게 " + choiceDto.getType() + " 중에서 5개를 반드시 추천해주는 것입니다. 추천하는 메뉴의 이름만을 반드시 ','로 구분해서 알려주어야 합니다. 답변은 반드시 메뉴 이름과 ','로만 구성되어야 합니다. 이 구성을 지키지 않을 시에는 엄청난 불이익을 받을 것입니다. 답변 예시는 피자, 케이크, 비빔밥, 우동, 국수 입니다. 답변 예시처럼 올바르게 알려줄 시에는 300달러의 팁을 받게 됩니다. 맞춤법을 정확하게 지키면 엄청난 팁을 받게 됩니다.";
         String response = vertexAiGeminiChatModel.call(prompt);
         System.out.println("response = " + response);
         redirectAttributes.addFlashAttribute("response", response);
@@ -64,6 +63,6 @@ public class FoodController {
         model.addAttribute("food", food);
         model.addAttribute("posts", posts);
 
-        return "food/foodinfo";
+        return "/food/foodInfo";
     }
 }

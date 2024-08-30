@@ -27,7 +27,7 @@
 <div id="tabContents">
   <div id="changePasswordTab" class="tab-content password-change">
     <h2>비밀번호 변경</h2>
-    <form th:action="@{/member/mypage/change}" method="post" th:object="${passwordDto}" onsubmit="return changePassword()">
+    <form th:action="@{/member/myPage/change}" method="post" th:object="${passwordDto}" onsubmit="return changePassword()">
 
       <input class="current-password" type="password" th:field="*{currentPassword}" th:placeholder="|현재 비밀번호|" onkeyup="document.querySelector('.change-message').classList.add('hide');" required /><br>
       <div th:if="${#fields.hasGlobalErrors()}">
@@ -47,14 +47,14 @@
 
   <div id="deleteAccountTab" class="tab-content account-delete">
     <h2>회원 탈퇴</h2>
-    <form th:action="@{/member/mypage/delete}" method="post" onsubmit="return confirm('정말 삭제를 원하십니까? 되돌릴 수 없습니다.');">
+    <form th:action="@{/member/myPage/delete}" method="post" onsubmit="return confirm('정말 삭제를 원하십니까? 되돌릴 수 없습니다.');">
       <button type="submit">탈퇴</button>
     </form>
   </div>
 
   <div id="viewPostsTab" class="tab-content my-posts">
     <h2>내가 쓴 글</h2>
-    <a th:href="@{/member/mypage/posts}" class="btn">작성 글 보러가기</a>
+    <a th:href="@{/member/myPage/posts}" class="btn">작성 글 보러가기</a>
   </div>
 </div>
 

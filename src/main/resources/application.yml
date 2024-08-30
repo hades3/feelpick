@@ -1,8 +1,8 @@
 Spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/feelpick
-    username : postgres
-    password: postgres
+    url: YOUR_DATABASE_URL
+    username : YOUR_USERNAME
+    password: YOUR_PASSWORD
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -19,11 +19,8 @@ Spring:
           project-id: feelpick
           location: asia-northeast3
 
-
-# dir 경로 설정을 다음과 같이 추가하고 경로상 가장 마지막엔 반드시 '/'를 넣어줘야 한다.
-# 해당 로컬 경로는 반드시 미리 만들어 둬야 한다.
 file:
-  dir: C:/Users/hades/Desktop/feelpick/file/
+  dir: YOUR_FILE_DIR_PATH
 
 logging:
   level:

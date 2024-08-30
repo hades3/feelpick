@@ -1,6 +1,5 @@
 package yctw.feelpick.controller;
 
-import com.google.common.base.Utf8;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -9,14 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import yctw.feelpick.domain.Food;
 import yctw.feelpick.domain.Member;
 import yctw.feelpick.domain.Post;
 import yctw.feelpick.dto.ModifyDto;
 import yctw.feelpick.dto.PostDto;
 import yctw.feelpick.domain.UploadFile;
-import yctw.feelpick.repository.UploadFileRepository;
 import yctw.feelpick.service.UploadFileService;
 import yctw.feelpick.repository.FoodRepository;
 import yctw.feelpick.service.PostService;
@@ -24,7 +21,6 @@ import yctw.feelpick.service.PostService;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -42,7 +38,7 @@ public class PostController {
         model.addAttribute("foodId", foodId);
         model.addAttribute("postDto", new PostDto());
         model.addAttribute("returnAddress", "/food/foodInfo/" + URLEncoder.encode(food.getName(), "UTF-8"));
-        return "post/createpost";
+        return "/post/createPost";
     }
 
     @PostMapping("/post/create/{foodId}")
@@ -89,7 +85,7 @@ public class PostController {
         String returnAddress = "/food/foodInfo/" + URLEncoder.encode(post.getFood().getName(), "UTF-8");
         model.addAttribute("postAddress", postAddress);
         model.addAttribute("returnAddress", returnAddress);
-        return "post/modifypost";
+        return "/post/modifyPost";
     }
 
     @PostMapping("/post/modify/{postId}")
